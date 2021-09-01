@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  server:
+    image: nginx:latest
+    ports:
+    - 80:80
+    volumes:
+    - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    - ./nginx/sites-enabled/:/etc/nginx/sites-enabled/
+    - ./assets/:/assets/
+  web:
+    build:
+      context: ./web
+      target: dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./web:/go/src/web
+      - ./assets/:/assets/
+    command: air -d
